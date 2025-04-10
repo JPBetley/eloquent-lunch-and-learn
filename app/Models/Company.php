@@ -10,6 +10,8 @@ class Company extends Model
     /** @use HasFactory<\Database\Factories\CompanyFactory> */
     use HasFactory;
 
+    //protected $with = ['users'];
+
     public function users()
     {
         return $this->hasMany(User::class);
