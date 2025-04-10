@@ -50,9 +50,9 @@
                   {{ $user->email }}
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                  {{ $user->last_login_at->diffForHumans() }}
+                  {{ $user->lastLogin->created_at->diffForHumans() }}
                   <span class="text-xs text-gray-400">
-                    ({{ $user->last_login_ip }})
+                    ({{ $user->lastLogin->ip_address }})
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">

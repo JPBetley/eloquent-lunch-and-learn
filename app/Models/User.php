@@ -50,27 +50,6 @@ class User extends Authenticatable
         ];
     }
 
-    #[Scope]
-    public function withLastLoginAt(Builder $query): void
-    {
-        $query->addSelect(['last_login_at' => Login::select('created_at')
-            ->whereColumn('user_id', 'users.id')
-            ->latest()
-            ->take(1)
-        ])
-        ->withCasts(['last_login_at' => 'datetime']);
-    }
-
-    #[Scope]
-    public function withLastLoginIp(Builder $query): void
-    {
-        $query->addSelect(['last_login_ip' => Login::select('ip_address')
-            ->whereColumn('user_id', 'users.id')
-            ->latest()
-            ->take(1)
-        ]);
-    }
-
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
@@ -79,5 +58,20 @@ class User extends Authenticatable
     public function logins(): HasMany
     {
         return $this->hasMany(Login::class);
+    }
+
+    public function lastLogin(): BelongsTo
+    {
+        return $this->belongsTo(Login::class);
+    }
+
+    #[Scope]
+    public function withLastLogin(Builder $query): void
+    {
+        $query->addSelect(['last_login_id' => Login::select('id')
+            ->whereColumn('user_id', 'users.id')
+            ->latest('created_at')
+            ->take(1)
+        ])->with('lastLogin');
     }
 }
