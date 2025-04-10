@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -60,18 +61,8 @@ class User extends Authenticatable
         return $this->hasMany(Login::class);
     }
 
-    public function lastLogin(): BelongsTo
+    public function lastLogin(): HasOne
     {
-        return $this->belongsTo(Login::class);
-    }
-
-    #[Scope]
-    public function withLastLogin(Builder $query): void
-    {
-        $query->addSelect(['last_login_id' => Login::select('id')
-            ->whereColumn('user_id', 'users.id')
-            ->latest('created_at')
-            ->take(1)
-        ])->with('lastLogin');
+        return $this->hasOne(Login::class)->latestOfMany();
     }
 }
