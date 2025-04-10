@@ -61,6 +61,16 @@ class User extends Authenticatable
         ->withCasts(['last_login_at' => 'datetime']);
     }
 
+    #[Scope]
+    public function withLastLoginIp(Builder $query): void
+    {
+        $query->addSelect(['last_login_ip' => Login::select('ip_address')
+            ->whereColumn('user_id', 'users.id')
+            ->latest()
+            ->take(1)
+        ]);
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);

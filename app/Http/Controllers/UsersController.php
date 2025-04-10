@@ -11,7 +11,8 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::query()
-            //->with('logins')
+            ->withLastLoginAt()
+            ->withLastLoginIp()
             ->orderBy('name')
             ->paginate();
 
