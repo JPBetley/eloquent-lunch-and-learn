@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Login;
 use App\Models\User;
 
 class UsersController extends Controller
@@ -10,7 +11,7 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::query()
-            ->with('company')
+            //->with('logins')
             ->orderBy('name')
             ->paginate();
 

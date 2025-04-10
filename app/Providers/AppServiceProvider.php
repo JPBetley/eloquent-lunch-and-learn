@@ -13,17 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //Model::shouldBeStrict(! $this->app->isProduction());
-        // Model::preventLazyLoading();
-        // Model::preventSilentlyDiscardingAttributes();
-        // Model::preventAccessingMissingAttributes();
-
-        //DB::prohibitDestructiveCommands($this->app->isProduction());
-        // FreshCommand::prohibit();
-        // RefreshCommand::prohibit();
-        // ResetCommand::prohibit();
-        // RollbackCommand::prohibit();
-        // WipeCommand::prohibit();
+        //
     }
 
     /**
