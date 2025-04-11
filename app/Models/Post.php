@@ -21,10 +21,10 @@ class Post extends Model
     {
         return new Attribute(
             get: function () {
-                if (optional($this->postTags()->type('post'))->count()) {
-                    return $this->postTags()->type('post')->first();
-                } elseif (optional($this->postTags()->type('author'))->count()) {
-                    return $this->postTags()->type('author')->first();
+                if (optional($this->postTags->where('type', 'post'))->count()) {
+                    return $this->postTags->where('type', 'post')->first();
+                } elseif (optional($this->postTags->where('type', 'author'))->count()) {
+                    return $this->postTags->where('type', 'author')->first();
                 }
             }
         );
