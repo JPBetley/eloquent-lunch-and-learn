@@ -17,12 +17,16 @@ class Post extends Model
         return $this->hasMany(PostTag::class);
     }
 
-    public function getPrimaryTagAttribute()
+    public function primaryTag(): Attribute
     {
-        if (optional($this->postTags()->type('post'))->count()) {
-            return $this->postTags()->type('post')->first();
-        } elseif (optional($this->postTags()->type('author'))->count()) {
-            return $this->postTags()->type('author')->first();
-        }
+        return new Attribute(
+            get: function () {
+                if (optional($this->postTags()->type('post'))->count()) {
+                    return $this->postTags()->type('post')->first();
+                } elseif (optional($this->postTags()->type('author'))->count()) {
+                    return $this->postTags()->type('author')->first();
+                }
+            }
+        );
     }
 }
