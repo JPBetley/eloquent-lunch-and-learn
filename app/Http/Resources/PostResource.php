@@ -19,7 +19,7 @@ class PostResource extends JsonResource
             'title' => $this->title,
             //'body' => $this->when($request->user()->isAdmin(), $this->body)
             'body' => $this->when(true, $this->body),
-            'tags' => PostTagResource::collection($this->postTags)
+            'tags' => PostTagResource::collection($this->whenLoaded('postTags')),
         ];
     }
 }
