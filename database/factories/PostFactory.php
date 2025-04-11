@@ -14,6 +14,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->word(),
+            'slug' => $this->faker->slug(),
             'body' => $this->faker->paragraphs(3, true),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
