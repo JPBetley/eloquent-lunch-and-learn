@@ -11,6 +11,9 @@ class PostsController extends Controller
     {
         return PostResource::collection(
             Post::query()
+                ->when(request()->get('withTags', false), function ($query) {
+                    $query->with('postTags');
+                })
                 ->paginate(50)
         );
     }
