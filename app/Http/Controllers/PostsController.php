@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 
 class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::query()
-            ->paginate(50);
-
-        return view('posts', ['posts' => $posts]);
+        return PostResource::collection(
+            Post::query()
+                ->paginate(50)
+        );
     }
 }
