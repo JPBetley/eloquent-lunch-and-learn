@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Company;
 use App\Models\Login;
+use App\Models\Post;
+use App\Models\PostTag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -14,12 +16,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Company::factory()
+        //Company::factory()
+        //    ->count(1000)
+        //    ->has(
+        //        User::factory()
+        //            ->count(50)
+        //            ->has(Login::factory()->count(50))
+        //    )->create();
+
+        Post::factory()
             ->count(1000)
-            ->has(
-                User::factory()
-                    ->count(50)
-                    ->has(Login::factory()->count(50))
-            )->create();
+            ->has(PostTag::factory())
+            ->create();
     }
 }
