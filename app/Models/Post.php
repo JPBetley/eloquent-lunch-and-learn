@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\AsStringable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,8 +31,41 @@ class Post extends Model
         );
     }
 
-    public function getRouteKeyName(): string
+    protected function casts(): array
     {
-        return 'slug';
+        return [
+            'title' => AsStringable::class,
+            'body' => AsStringable::class,
+            'slug' => AsStringable::class,
+        ];
+    }
+
+    public function getSnippetAttribute()
+    {
+        return $this->body
+            ->stripTags()
+            ->words(30, '...');
+    }
+
+    public function getUrlPathAttribute()
+    {
+        return $this->slug
+            ->prepend('/articles/');
+    }
+
+    public function getFormattedBodyAttribute()
+    {
+        return $this->body
+            ->markdown()
+            ->replaceMatches('/\@mention\((.*?)\)/', '<a href="/users/$1">@$1</a>')
+            ->replace('[[', '<mark>')
+            ->replace(']]', '</mark>');
+    }
+
+    public function getSeoTitleAttribute()
+    {
+        return $this->title
+            ->title()
+            ->limit(60);
     }
 }
